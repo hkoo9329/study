@@ -2,7 +2,7 @@
 
 ## 목차
 
-1. [스프링 시큐리티란](#스프링-시큐리티란)
+1. [스프링 시큐리티란?](#스프링-시큐리티란?)
 2. [스프링 시큐리티 시작하기](#스프링-시큐리티-시작하기)
    1. Java Configuration
    2. HttpSecurity
@@ -15,7 +15,7 @@
    5. Localization
    6. AuthenticationSuccessHandler & AuthenticationFailureHandler
 4. [스프링 시큐리티 페이지](#스프링-시큐리티-페이지)
-5. [UserDetails UserDetailsService](#UserDetails와-UserDetailsService)
+5. [UserDetails & UserDetailsService](#UserDetails-&-UserDetailsService)
 6. [끝마치며](#끝마치며)
 
 
@@ -24,7 +24,7 @@
 
 
 
-## 스프링 시큐리티란
+## 스프링 시큐리티란?
 
 스프링 시큐리티를 이해하기 위해서는 스프링 시큐리티가 무엇인지 알아야한다. 스프링 시큐리티 레퍼런스에서는 자바 EE 기반의 엔터프라이즈 소프트웨어 애플리케이션을 위한 포괄적인 보안 서비스들을 제공하고 오픈 플랫폼이면서 자신만의 인증 메커니즘을 간단하게 만들수 있다고 자랑(?)하고 있다.
 
@@ -636,7 +636,7 @@ AuthenticationException으로 로그인 실패의 이유도 체크할 수 있게
 
 
 
-## UserDetails와 UserDetailsService
+## UserDetails & UserDetailsService
 
 스프링 시큐리티는 사용자 정보를 UserDetails 구현체로 사용합니다. 그래서 스프링 시큐리티는 org.springframework.security.core.userdetails.User라는 클래스를 제공합니다. 그러나, 이름과 패스워드 그리고 권한들에 대한 필드만 존재하기 때문에 이메일 정보 또는 프로필 이미지 경로 등과 같은 부가적인 정보를 담을 수 없습니다.
 
