@@ -61,11 +61,7 @@ DVCS (분산 버전 관리 시스템) 인 Git, Mecurial, Bazaar, Darcs 같은 DV
 
 
 
-
-
-
-
-# Git 기초
+## Git 기초
 
 Git을 배우려면 Subversion이나 Perforce 같은 다른 VCS를 사용하던 경험을 버려야한다. Git은 미묘하게 달라서 다른 VCS에서 쓰던 개념으로는 헷갈린다. 사용자 인터페이스는 매우 비슷하지만, 정보를 취급하는 방식이 다르다.
 
@@ -157,5 +153,68 @@ Git 디렉토리에 있는 파일들은 Committed 상태이다. 파일을 수정
 
 
 
-## CLI
 
+
+
+
+
+
+# Git의 기초
+
+## Git 저장소 만들기
+
+Git 저장소를 만드는 방법은 두 가지다. 기존 프로젝트나 디렉토리를 Git 저장소로 만드는 방법이 있고, 다른 서버에 있는 저장소를 Clone 하는 방법이 있다.
+
+
+
+### 기존 디렉토리를 Git 저장소로 만들기
+
+기존 프로젝트를 Git으로 관리하고 싶을 때, 프로젝트의 디렉토리로 이동한다. 그리고 아래와 같은 명령을 실행한다.
+
+```
+$ git init
+```
+
+이 명령은 .git 이라는 하위 디렉토리를 만든다. .git 디렉토리에는 저장소에 필요한 뼈대 파일 (Skeleton)이 들어 있다. 이 명령만으로는 아직 프로젝트의 어떤 파일도 관리하지 않는다. 
+
+Git이 파일을 관리하게 하려면 저장소에 파일을 추가하고 커밋해야 한다. git add 명령으로 파일을 추가하고 git commit 명령으로 커밋한다.
+
+```
+$ git add *.c
+$ git add LICENSE
+$ git commit -m 'initial project version'
+```
+
+명령어 몇 개로 순식간에 Git 저장소로 만들고 파일 버전 관리를 시작했다.
+
+
+
+## 기존 저장소를 Clone 하기
+
+다른 프로젝트에 참여하려거나 (Contribute) Git 저장소를 복사하고 싶을 때 git clone 명령을 사용한다. Git이 Subversion과 다른 가장 큰 차이점은 서버에 있는 거의 모든 데이터를 복사한다는 것이다.
+
+git clone을 실행하면 프로젝트 히스토리를 전부 받아온다. 실제로 서버의 디스크가 망가져도 클라이언트 저장소 중에서 아무거나 하나 가져다가 복구하면 된다. 
+
+**<span style ="color:#B40404">git clone [url]</span>** 명령으로 저장소를 Clone 한다. libgit2 라이브러리 소스코드를 Clone  하려면 아래와 같이 실행한다.
+
+```
+$ git clone https://github.com/libgit2/libgit2
+```
+
+>이 명령은 'libgit2' 이라는 디렉토리를 만들고 그 안에 <span style ="color:#B40404">.git</span> 디렉토리를 만든다. 그리고 저장소의 데이터를 모드 가져와서 자동으로 가장 최신 버전을 Checkout 해 놓는다. <span style ="color:#B40404">libgit2</span> 디렉토리로 이동하면 Checkout으로 생성한 파일을 볼 수 있고 당장 하고자 하는 일을 시작할 수 있다. 아래와 같은 명령을 사용하여 저장소를 Clone 하면 'libgit2' 가 아니라 다른 디렉토리 이름으로 Clone 할 수 있다.
+
+```
+$ git clone https://github.com/libgit2/libgit2 mylibgit
+```
+
+디렉토리 이름이 <span style ="color:#B40404">mylibgit</span> 이라는 것만 빼면 이 명령의 결과와 앞선 명령의 결과는 같다.
+
+Git은 다양한 프로토콜을 지원한다. 이제까지는 <span style ="color:#B40404">https://</span> 프로토콜을 사용했지만 <span style ="color:#B40404">git://</span>를 사용할 수도 있고 <span style ="color:#B40404">user@server:path/to/repo.git</span> 처럼 SSH 프로토콜을 사용할 수도 있다. 
+
+
+
+## 수정하고 저장소에 저장하기
+
+만질 수 있는 Git 저장소를 하나 만들었고 워킹 디렉토리에 Checkout도 했다.  이제는 파일을 수정하고 파일의 스냅샷을 커밋해 보자. 파일을 수정하다가 저장하고 싶으면 스냅샷을 커밋한다.
+
+워킹 디렉토리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked (관리대상이 아님)로 나눈다.  Tracked 파일은 이미 스냅샷에 포함돼 있던 파일이다.
