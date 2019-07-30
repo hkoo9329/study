@@ -1,4 +1,4 @@
-# Pro Git 책 정리
+# Pro Git 책 정리 (기본)
 
 
 
@@ -217,4 +217,149 @@ Git은 다양한 프로토콜을 지원한다. 이제까지는 <span style ="col
 
 만질 수 있는 Git 저장소를 하나 만들었고 워킹 디렉토리에 Checkout도 했다.  이제는 파일을 수정하고 파일의 스냅샷을 커밋해 보자. 파일을 수정하다가 저장하고 싶으면 스냅샷을 커밋한다.
 
-워킹 디렉토리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked (관리대상이 아님)로 나눈다.  Tracked 파일은 이미 스냅샷에 포함돼 있던 파일이다.
+워킹 디렉토리의 모든 파일은 크게 Tracked(관리대상임)와 Untracked (관리대상이 아님)로 나눈다.  Tracked 파일은 이미 스냅샷에 포함돼 있던 파일이다. 
+
+Tracked 파일은 또 Unmodified (수정하지 않음)와 Modified (수정함) 그리고 Staged (커밋으로 저장소에 기록할) 상태 중 하나이다. 그리고 나머지 파일은 모두 Untracked 파일이다.
+
+Untracked 파일은 워킹 디렉토리에 있는 파일 중 스냅샷에도 Staging Area 에도 포함되지 않은 파일이다. 처음 저장소를 Clone 하면 모든 파일은 Tracked 이면서 Unmodified 상태이다. 파일을 Checkout 하고 나서 아무것도 수정하지 않았기 때문에 그렇다.
+
+
+
+
+
+마지막 커밋 이후 아직 아무것도 수정하지 않은 상태에서 어떤 파일을  수정하면 Git은 그 파일을 Modified 상태로 인식한다. 실제로 커밋을 하기 위해서는 이 수정한 파일을 Staged 상태로 만들고, Staged 상태의 파일을 커밋한다. 이런 라이프사이클을 계속 반복한다.
+
+![](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FIfe8M%2Fbtqw0aYes7G%2FjKy3ZP0KDIN2B1MvUihVMk%2Fimg.jpg)
+
+
+
+
+
+## 파일의 상태 확인하기
+
+파일의 상태를 확인하려면 보통 <span style ="color:#B40404;font-weight:bold; font-size:20px">git status</span> 명령을 사용한다.
+
+Untracked files 부분에 속해 있는 파일은 Untracked 상태라는 것을 말한다.
+
+
+
+## 파일을 새로 추적
+
+<span style ="color:#B40404;font-weight:bold; font-size:20px">git add </span> 명령으로 파일을 새로 추적할 수 있다.
+
+
+
+## 파일 상태를 짤막하게 확인하기
+
+<span style ="color:#B40404;font-weight:bold; font-size:20px">git status</span> 명령으로 확인할 수 있는 내용이 좀 많아 보일 수 있다. 그래서 좀 더 간단하게 변경 내용을 보여주는 옵션이 있다. 
+
+<span style ="color:#B40404;font-weight:bold; font-size:20px">git status -s </span>또는<span style ="color:#B40404;font-weight:bold; font-size:20px"> git status --short</span> 처럼 옵션을 주면 현재 변경한 상태를 짤막하게 보여준다.
+
+```
+$ git status -s
+ M README
+MM Rakefile
+A  lib/git.rb
+M  lib/simplegit.rb
+?? LICENSE.txt
+```
+
+- 아직 추적하지 않은 새 파일 앞에는 ?? 표시가 붙는다.
+- 새로 생성한 파일 앞에는 A 표시가 붙는다.
+- 수정한 파일 앞에는 M 표시가 붙는다.
+
+그리고 왼쪽에는 Staging Area에서의 상태를, 오른쪽에는 Working Tree에서의 상태를 표시한다.
+
+
+
+## 파일 무시하기
+
+어떤 파일은 Git이 관리할 필요가 없다. 보통 로그 파일이나 빌드 시스템이 자동으로 생성한 파일이 그렇다. 그런 파일을 무시하려면 <span style ="color:#B40404;font-weight:bold; font-size:20px">.gitignore</span> 파일을 만들고 그 안에  무시할 파일 패턴을 적는다.
+
+```
+$ cat .gitignore
+*.[oa]
+*~
+```
+
+첫 번째 라인은 확장자가 ".o" 나 ".a" 인 파일을 Git이 무시하라는 것이고, 둘째 라인은 ~로 끝나는 모든 파일을 무시하라는 것이다.
+
+### .gitignore 파일에 입력하는 패턴의 규칙
+
+- 아무것도 없는 라인이나, '#' 로 시작하는 라인은 무시한다.
+- 표준 Glob 패턴을 사용한다.
+- 슬래시(/)로 시작하면 하위 디렉토리에 적용되지 (Recursivity) 않는다.
+- 디렉토리는 슬래시 (/)를 끝에 사용하는 것으로 표현한다.
+- 느낌표 (!)로 시작하는 패턴은 파일을 무시하지 않는다.
+
+```
+# 확장자가 .a인 파일 무시
+*.a
+
+# 윗 라인에서 확장자가 .a인 파일은 무시하게 했지만 lib.a는 무시하지 않음
+!lib.a
+
+# 현재 디렉토리에 있는 TODO 파일은 무시하고 subdir/TODO 처럼 하위디렉토리에 있는 파일은 무시하지 않음
+/TODO
+
+# build/ 디렉토리에 있는 모든 파일은 무시
+build/ 
+
+# doc/notes.txt 파일은 무시하고 doc/server/arch.txt 파일은 무시하지 않음
+doc/*.txt
+
+# doc 디렉토리 아래의 모든 .pdf 파일을 무시
+doc/**/*.pdf
+
+```
+
+
+
+
+
+
+
+## Staged와 Unstaged 상태의 변경 내용을 보기
+
+단순히 파일이 변경됐다는 사실이 아니라 어떤 내용이 변경됐는지 살펴보려면 <span style ="color:#B40404;font-weight:bold; font-size:20px">git diff</span>  명령을 사용해야 한다.
+
+만약 커밋하려고 Staging Area에 넣은 파일의 변경 부분을 보고 싶으면 <span style ="color:#B40404;font-weight:bold; font-size:20px">git diff --staged</span> 옵션을 사용한다. 이 명령은 저장소에 커밋한 것과 Staging Area에 있는 것을 비교한다.
+
+꼭 잊지 말아야 할 것이 있는데 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git diff </span> 명령은 마지막으로 커밋한 후에 수정한 것들 전부를 보여주지 않는다. <span style ="color:#B40404;font-weight:bold; font-size:20px">git diff </span>는 Unstaged 상태인 것들만 보여준다. 수정한 파일을 모두 Staging Area에 넣었다면 <span style ="color:#B40404;font-weight:bold; font-size:20px">git diff</span> 명령은 아무것도 출력하지 않는다.
+
+Staged 상태인 파일은 <span style ="color:#B40404;font-weight:bold; font-size:20px">git diff --cached</span> 옵션으로 확인한다. <span style ="color:#B40404;font-weight:bold; font-size:20px"> -- staged</span> 와 <span style ="color:#B40404;font-weight:bold; font-size:20px"> --cached</span>는 같은 옵션이다.
+
+
+
+## 변경사항 커밋하기
+
+Git은 생성하거나 수정하고 나서 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git add</span> 명령으로 추가하지 않은 파일은 커밋하지 않는다. 그 파일은 여전히 Modified 상태로 남아 있다. 커밋하기 전에 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git status </span> 명령으로 모든 것이 Staged 상태인지 확인할 수 있다.
+
+그 후에 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git commit</span> 을 실행하여 커밋한다.
+
+```java
+$ git commit
+$ git commit -m "메시지" // 메시지를 인라인으로 첨부하는 옵션 -m
+$ git commit -am "메시지" // add와 메시지 추가를 동시에 하는 옵션
+```
+
+
+
+## 파일 삭제 하기
+
+Git에서 파일을 제거하려면 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git rm </span>명령으로 Tracked 상태의 파일을 삭제한 후에 (정확하게는 Staging Area에서 삭제하는 것) 커밋해야 한다.
+
+이 명령은 워킹 디렉토리에 있는 파일도 삭제하기 때문에 실제로 파일도 지워진다.
+
+
+
+## 파일 이름 변경하기
+
+Git은 다른 VCS 시스템과는 달리 파일 이름의 변경이나 파일의 이동을 명시적으로 관리하지 않는다. 다시 말해서 파일 이름이 변경됐다는 별도의 정보를 저장하지 않는다. 다시 말해서 파일 이름이 변경됐다는 별도의 정보를 저장하지 않는다. Git은 똑똑해서 굳이 파일 이름이 변경되었다는 것을 추적하지 않아도 아는 방법이 있다. 파일의 이름이 변경된 것을 Git이 어떻게 알아내는지  알아보자
+
+이렇게 말하고 Git에 <span style ="color:#B40404;font-weight:bold; font-size:20px"> mv</span> 명령이 있는게 좀 이상하지만, 아래와 같이 파일 이름을 변경할 수 있다.
+
+```java
+$ git mv file_from file_to
+```
+
