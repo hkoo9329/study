@@ -363,3 +363,118 @@ Git은 다른 VCS 시스템과는 달리 파일 이름의 변경이나 파일의
 $ git mv file_from file_to
 ```
 
+잘 동작한다. 이 명령을 실행하고 Git의 상태를 확인해보면 Git은 이름이 바뀐 사실을 알고 있다.
+
+```vb
+$ git mv README.md README
+$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes to be committed:
+	(use "git reset HEAD <file>..." to unstage)
+	renamed: README.md -> README
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+## 커밋 히스토리 조회하기
+
+특별한 아규먼트 없이 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git log</span> 명령을 실행하면 저장소의 커밋 히스토리를 시간 순으로 보여준다. 
+
+- SHA-1 체크섬
+- 저자 이름
+- 저자 이메일
+- 커밋한 날짜
+- 커밋 메시지
+
+위 와같은 내용을 순서대로 보여준다.
+
+
+
+log의 여러 옵선 중에 <span style ="color:#B40404;font-weight:bold; font-size:20px"> git log -p</span>는 굉장히 유용한 옵션이다. 이는 각 커밋의 diff 결과를 보여준다. 다른 유용한 옵션으로 '-2'가 있는데 최근 두 개의 결과만 보여주는 옵션이다.
+
+```
+example
+
+
+$ git log -p -2
+commit ca82a6dff817ec66f44342007202690a93763949
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Mon Mar 17 21:52:11 2008 -0700
+changed the version number
+diff --git a/Rakefile b/Rakefile
+index a874b73..8f94139 100644
+--- a/Rakefile
++++ b/Rakefile
+@@ -5,7 +5,7 @@ require 'rake/gempackagetask'
+spec = Gem::Specification.new do |s|
+s.platform = Gem::Platform::RUBY
+s.name = "simplegit"
+- s.version = "0.1.0"
++ s.version = "0.1.1"
+s.author = "Scott Chacon"
+s.email = "schacon@gee-mail.com"
+s.summary = "A simple gem for using Git in Ruby code."
+commit 085bb3bcb608e1e8451d4b2432f8ecbe6306e7e7
+Author: Scott Chacon <schacon@gee-mail.com>
+Date: Sat Mar 15 16:40:33 2008 -0700
+removed unnecessary test
+diff --git a/lib/simplegit.rb b/lib/simplegit.rb
+index a0a60ae..47c6340 100644
+--- a/lib/simplegit.rb
++++ b/lib/simplegit.rb
+@@ -18,8 +18,3 @@ class SimpleGit
+end
+end
+-
+-if $0 == __FILE__
+- git = SimpleGit.new
+- puts git.show
+-end
+\ No newline at end of file
+```
+
+
+
+
+
