@@ -4,9 +4,9 @@
 
 ### 도메인 메핑 어노테이션
 
-![1570175897131](C:\Users\lee\AppData\Roaming\Typora\typora-user-images\1570175897131.png)
+![1570175897131](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2FcKeCWd%2FbtqyM1Ui7i5%2FBlQoqlIbbnJz9cl4M9LxLK%2Fimg.png)
 
-![1570175951773](C:\Users\lee\AppData\Roaming\Typora\typora-user-images\1570175951773.png)
+![1570175951773](https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Fk.kakaocdn.net%2Fdn%2Fce8ccJ%2FbtqyOUNCv9n%2FvpefVD1sMRKvb8iF5j6Msk%2Fimg.png)
 
 1. @GeneratedValue(strategy = GenerationType.IDENTITY) : 기본 키가 자동으로 할당되도록 설정하는 어노테이션. 
 
@@ -34,3 +34,28 @@
 
 
 
+
+
+## CommandLineRunner  
+
+CommandLineRunner는 애플리케이션 구동 후 특정 코드를 실행기키고 싶을 때 직접 구현하는 인터페이스이다. 애플리케이션 구동 시 테스트 데이터를 함께 생성하여 데모 프로젝트를 실행/테스트하고 싶을 때 편리하다. 또한, 여러 CommandLineRunner를 구현하여 같은 애플리케이션 컨텍스트의 빈에 사용할 수 있다.
+
+
+
+
+
+## 서버 사이트 템플릿
+
+### 서버 사이드 템플릿이란?
+
+미리  정의된 HTML에 데이터를 반영하여 뷰를 만드는 작업을 서버에서 진행하고  클라이언트에 전달하는 방식을 말한다. 흔히 사용하는 JSP, 타임리프 등이 서버 사이드 템플릿 엔진이며 스프링 부트 2.0 버전에서 지원하는 템플릿 엔진은 타임리프, 프리마커, 무스타치, 그루비 템플릿 (Groovy Templates) 등이 있다.
+
+### 타임리프
+
+- @{...}
+
+  타임리프의 기본 링크 표현 구문이다. server-relative URL 방식, 즉 동일 서버 내의 다른 컨텍스트로 연결해주는 방식으로 서버의 루트 경로를 기준으로 구문에서 경로를 탐색하여 href의 URL을 대체한다.
+
+- th:each
+
+  반복 구문으로 ${boardList}에 담긴 리스트를 Board 객체로 순차 처리한다. Board 객체에 담긴 getO메서드를 board.O로 접근할 수 있다.
