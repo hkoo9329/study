@@ -292,3 +292,231 @@ print(a)
 
 ```
 
+
+
+## 조건문
+
+먼저 파이썬이 다른 언어와 다름점으로 문자열에도 비교 연산자가 가능하다는 점이다. 아스키코드 값을 비교하는 것이 아닌 사전 순서로 비교한다는 것이다. 
+
+이것은 솔직히 좀 놀란 점 중 하나이다.
+
+```python
+print("가방"=="가방")
+#True
+print("가방"!="하마")
+#True
+print("가방"<"하마")
+#True
+print("가방">"하마")
+#False
+```
+
+
+
+### not 연산자
+
+not 연산자는 단항 연산자로, 참과 거짓을 반대로 바꿀 때 사용한다.
+
+```python
+print(not True)
+#False
+print(not False)
+#True
+```
+
+### and 연산자와 or 연산자
+
+써놓고 보니 다른 언어들과 같은 내용임으로 설명은 패스
+
+java나 c언어에서의 &&나 ||와 같다고 생각하면 된다.
+
+
+
+
+
+### if 조건문
+
+```python
+number = input("insert number :")
+number = int(number)
+
+if number > 0:
+    print("Positive number")
+
+if number < 0:
+    print("negative number")
+```
+
+
+
+### 날짜 시간 활용
+
+```python
+# 날짜 시간과 관련된 기능을 가져온다.
+import datetime
+
+# 현재 날짜 시간을 구한다.
+now = datetime.datetime.now()
+
+print(now.year, "년")
+print(now.month, "월")
+print(now.day,"일")
+print(now.hour,"시")
+print(now.minute,"분")
+print(now.second,"초")
+#출력
+# 2019 년
+# 9 월
+# 17일
+# 17시
+# 45분
+# 30초
+
+print("{}년 {}월 {}일 {}시 {}분 {}초".format(
+	now.year,
+   	now.month,
+    now.day,
+    now.hour,
+    now.minute,
+    now.second
+))
+# 출력
+# 2019년 9월 17일 17시 45분 30초
+
+# 아래와 같은 시간 비교 가능
+if now.hour < 12:
+    print("am")
+
+if now.month <=5 and 3<=now.month:
+    print("spring")
+    
+```
+
+
+
+### 짝수 홀수 구분
+
+```python
+number = input("정수 입력 : ")
+
+# 마지막 자리 숫자를 추출
+last_chracter = number[-1]
+
+# 숫자로 변환하기
+last_number = int(last_character)
+
+# 짝수 확인
+if last_number == 0\
+	or last_number == 2\
+    or last_number == 4\
+    or last_number == 6\
+    or last_number == 8:
+        print("짝수입니다.")
+     
+# 여기서 \는 엔터시 계속 같은 라인이다라는 것을 표시해주는 것이다.
+
+```
+
+
+
+### if, elif,else
+
+크게 다른것은 없고 else if가 파이썬에서는 `elif`라는 키워드로 사용한다.
+
+```python
+if 조건A:
+    ~
+elif 조건B:
+    ~
+else:
+    ~
+```
+
+
+
+### pass 키워드
+
+```python
+if number >0:
+    #양수일때
+else:
+    #음수일때
+```
+
+다른 프로그래밍 언어에서는 위에서 처럼 조건문 뒤에 아무것도 작성하지 않아도 정상적으로 실행되지만, 파이썬의 경우에는 if 조건문 사이에는 무조건 들여쓰기 4칸을 넣고 코드를 작성해야만 구문이 성립되기 때문에 위와 같이 작성한 경우에는 `IndentationError`를 발생한다.
+
+`IndentationError`는 들여쓰기가 잘못되어 있다라는 의미이다. 그렇기 때문에 if 구문 사이에는 어떤 내용이라도 넣어 줘야 한다. 다음과 같이 0을 넣어도 일단 실행은 정상적으로 된다.
+
+그때 사용하는 것이 pass라는 것이다. pass 키워드를 만나면 "아무것도 안함", "곧 개발하겠음" 정도의 의미로 해석하면 된다.
+
+
+
+```python
+# 입력을 받는다.
+number = input("정수 입력> ")
+number = int(number)
+
+# 조건문 사용
+if number > 0:
+    # 양수 일 때
+    pass
+else:
+    # 음수 일 때
+    pass
+
+```
+
+
+
+### raise NotImplementedError
+
+raise 키워드와 NotImplementedError를 조합해 raise NotImplementedError를 사용하면 아직 구현하지 않은 부분이다 라는 오류를 강제로 발생시킬 수도 있다.
+
+```python
+# 입력을 받는다.
+number = input("정수 입력 : ")
+number = int(number)
+
+# 조건문 사용
+if number > 0:
+    # 양수 일 때
+    raise NotImplementedError
+else:
+    # 음수 일 때
+    raise NotImplementedError
+```
+
+ 코드를 실행하면 코드의 실행은 정상적으로 진행된다. 대신 구현되지 않은 부분에 들어서는 순간 NotImplementedError라는 오류를 발생시킨다. 따라서 "이 부분을 구현을 안했구나"라고 인지 할 수 있다.
+
+
+
+
+
+## 리스트와 반복문
+
+파이썬에서 리스트의 의미는 여러가지 자료를 저장할 수 있는 자료이다.
+
+파이썬에서 리스트를 생성하는 방법은 다음과 같이 대괄호 [] 에 자료를 쉼표로 구분해서 입력한다. 대괄호[] 내부에 넣은 자료를 `요소`라고 하고 영어로는 `element`라고 부른다.
+
+```python
+[1,2,3,4,5]
+# 각각 다른 형이지만 같은 리스트에 요소로 입력가능
+list_a = [235,32,True,"문자열"]
+
+list_a[0]
+#235
+
+
+# 리스트도 뒤에서부터 요소를 선택할 수 있다.
+list_a[-1]
+#문자열
+
+# 이런식으로 사용도 가능 
+list_a[-1][0] 
+#문
+```
+
+```python
+
+```
+
